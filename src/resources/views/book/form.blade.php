@@ -29,9 +29,7 @@
         <select id="book-author" name="author_id" class="form-select @error('author_id') is-invalid @enderror">
             <option value="">Norādiet autoru!</option>
             @foreach($authors as $author)
-            <option value="{{ $author->id }}" @if ($author->id == old('author_id', $book->author-
-                >id ?? false)) selected @endif
-                >{{ $author->name }}</option>
+            <option value="{{ $author->id }}" @if ($author->id == old('author_id', $book->author->id ?? false)) selected @endif >{{ $author->name }}</option>
             @endforeach
         </select>
         @error('author_id')
@@ -39,9 +37,19 @@
         @enderror
     </div>
     <div class="mb-3">
+        <label for="book-category" class="form-label">Kategorijas</label>
+        <select id="book-category" name="category_id" class="form-select @error('category_id') is-invalid @enderror">
+            <option value="">Norādiet kategoriju!</option>
+            @foreach($categories as $category)
+            <option value="{{ $category->id }}" @if ($category->id == old('category_id', $book->category->id ?? false)) selected @endif >{{ $category->name }}</option>
+            @endforeach
+        </select>
+        @error('category_id')
+        <p class="invalid-feedback">{{ $errors->first('category_id') }}</p>
+        @enderror
+    </div>
+    <div class="mb-3">
         <label for="book-description" class="form-label">Apraksts</label>
-        30 / 54
-        K. Immers, VeA, 2022-11
         <textarea id="book-description" name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description', $book->description) }}</textarea>
         @error('description')
         <p class="invalid-feedback">{{ $errors->first('description') }}</p>
@@ -61,13 +69,12 @@
         <p class="invalid-feedback">{{ $errors->first('price') }}</p>
         @enderror
     </div>
-    // image
     <div class="mb-3">
         <div class="form-check">
             <input type="checkbox" id="book-display" name="display" value="1" class="form-check-input @error('display') is-invalid @enderror" @if (old('display', $book->display)) checked @endif
             >
             <label class="form-check-label" for="book-display">
-                Publicēt ierakstu
+                Publisks ieraksts
             </label>
             @error('display')
             <p class="invalid-feedback">{{ $errors->first('display') }}</p>

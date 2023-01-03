@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        
-        
-    }
+        Schema::table('books', function (Blueprint $table) {
+            $table->foreignId('category_id');
+        });
 
+    }
     /**
      * Reverse the migrations.
      *
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        //
     }
 };

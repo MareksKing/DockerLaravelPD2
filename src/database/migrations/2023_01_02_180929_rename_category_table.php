@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        
-        
+        Schema::rename('category', 'categories');
     }
 
     /**
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        //
     }
 };
