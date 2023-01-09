@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 class Book extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'author_id','category_id', 'description', 'price', 'year'];
+    protected $fillable = ['name', 'author_id', 'category_id', 'description', 'price', 'year'];
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
@@ -28,7 +28,7 @@ class Book extends Model
         });
     }
 
-    
+
 
     public function author()
     {
@@ -38,5 +38,19 @@ class Book extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => intval($this->id),
+            'name' => $this->name,
+            'description' => $this->description,
+            'author' => $this->author->name,
+            'genre' => ($this->genre ? $this->genre->name : ''),
+            'price' => number_format($this->price, 2),
+            'year' => intval($this->year),
+            'image' => asset('images/' . $this->image),
+        ];
     }
 }
